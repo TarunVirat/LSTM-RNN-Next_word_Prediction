@@ -45,6 +45,9 @@ model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accur
 # Train model (keep epochs small for quick training on Streamlit Cloud)
 model.fit(X, y, epochs=5, verbose=1)
 
-# Save new model in .keras format
-model.save("next_word_lstm.keras", include_optimizer=False)
+# Save only weights
+model.save_weights("next_word_lstm.weights.h5")
 
+# Save metadata (total_words and max_sequence_len)
+with open("model_config.pkl", "wb") as f:
+    pickle.dump({"total_words": total_words, "max_sequence_len": max_sequence_len}, f)
