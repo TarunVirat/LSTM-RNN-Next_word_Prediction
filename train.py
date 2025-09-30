@@ -45,9 +45,14 @@ model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accur
 # Train model (keep epochs small for quick training on Streamlit Cloud)
 model.fit(X, y, epochs=5, verbose=1)
 
-# Save only weights
+# Save model architecture
+model_json = model.to_json()
+with open("model_architecture.json", "w") as json_file:
+    json_file.write(model_json)
+
+# Save model weights
 model.save_weights("next_word_lstm.weights.h5")
 
-# Save metadata (total_words and max_sequence_len)
+# Save metadata (vocab size and sequence length)
 with open("model_config.pkl", "wb") as f:
     pickle.dump({"total_words": total_words, "max_sequence_len": max_sequence_len}, f)
