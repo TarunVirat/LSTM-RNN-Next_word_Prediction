@@ -46,4 +46,5 @@ model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accur
 model.fit(X, y, epochs=5, verbose=1)
 
 # Save new model in .keras format
-model.save("next_word_lstm.keras")
+model.save("next_word_lstm.keras", include_optimizer=False)
+
