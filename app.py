@@ -2,23 +2,10 @@ import streamlit as st
 import numpy as np
 import pickle
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from keras.src.legacy.saving import legacy_h5_format
-from keras import layers
+from tensorflow import keras
 
-# Load the LSTM Model with custom objects
-custom_objects = {
-    "LSTM": layers.LSTM,
-    "GRU": layers.GRU,
-    "SimpleRNN": layers.SimpleRNN,
-    "Embedding": layers.Embedding,
-    "Dense": layers.Dense,
-    "Dropout": layers.Dropout
-}
-
-model = legacy_h5_format.load_model_from_hdf5(
-    'next_word_lstm.h5',
-    custom_objects=custom_objects
-)
+# Load the LSTM model saved in the new .keras format
+model = keras.models.load_model("next_word_lstm.keras")
 
 # Load the tokenizer
 with open('tokenizer.pickle', 'rb') as handle:
