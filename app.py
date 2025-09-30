@@ -1,11 +1,11 @@
 import streamlit as st
 import numpy as np
 import pickle
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing.sequence import pad_sequences
 
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+from keras.src.legacy.saving import legacy_h5_format
 #Load the LSTM Model
-model=load_model('next_word_lstm.h5')
+model = legacy_h5_format.load_model_from_hdf5('next_word_lstm.h5')
 
 #3 Laod the tokenizer
 with open('tokenizer.pickle','rb') as handle:
@@ -31,4 +31,5 @@ if st.button("Predict Next Word"):
     max_sequence_len = model.input_shape[1] + 1  # Retrieve the max sequence length from the model input shape
     next_word = predict_next_word(model, tokenizer, input_text, max_sequence_len)
     st.write(f'Next word: {next_word}')
+
 
